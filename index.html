@@ -1,5 +1,5 @@
 <!DOCTYPE HTML>
-<html lang="zh-CN">
+<html lang="zh-CN" manifest="res/manifest.appcache">
 <head>
 <title>AppUI</title>
 <meta charset="UTF-8">
@@ -10,20 +10,28 @@
 <link rel="apple-touch-icon-precomposed" href="res/img/appui.png" />
 <link rel="apple-touch-startup-image" href="res/img/startup.png" />
 <link rel="stylesheet" type="text/css" href="res/ui.css" />
+<link rel="stylesheet" type="text/css" href="res/icons.css" />
+<link rel="stylesheet" type="text/css" href="res/app.css" />
 </head>
 <body>
 <div id="jQUi">
+  <div id="header">
+    <h1>AppUI</h1>
+  </div>
   <div id="content">
-    <div id="main" class="panel" data-footer="none">
-      <header>
-        <h1>AppUI</h1>
-      </header>
-
+    <div id="home" class="panel" /*data-footer="none"*/>
       <div id="info">
         <a href="#" id="abc">Touch this, Tap, swipe then trigger Events.</a>
       </div>
 
+      <!--custom footer-->
+      <!--<header></header>-->
+      <!--<footer></footer>-->
+
     </div>
+  </div>
+  <div id="navbar">
+    <a target="#home" class="icon home">Home</a>
   </div>
 
 </div>
