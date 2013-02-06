@@ -4,3 +4,5 @@
  * Current App css
  */
 a { color: #333333; }
+p+p { padding-top: 10px;  }
+h1 { font-size: 1.8em; }

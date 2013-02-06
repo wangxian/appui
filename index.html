@@ -1,5 +1,5 @@
 <!DOCTYPE HTML>
-<html lang="zh-CN" manifest="res/manifest.appcache">
+<html lang="zh-CN" manifest="res/manifest.appcache" xmlns="http://www.w3.org/1999/html">
 <head>
 <title>AppUI</title>
 <meta charset="UTF-8">
@@ -15,29 +15,76 @@
 </head>
 <body>
 <div id="jQUi">
-  <div id="header">
-    <h1>AppUI</h1>
-  </div>
   <div id="content">
-    <div id="home" class="panel" /*data-footer="none"*/>
+    <div id="home" class="panel">
       <div id="info">
-        <a href="#" id="abc">Touch this, Tap, swipe then trigger Events.</a>
+
+        <h1>This is a Long Text test.</h1>
+        <h2>This is a Long Text test.</h2>
+        <h3>This is a Long Text test.</h3>
+        <h4>This is a Long Text test.</h4>
+        <h5>This is a Long Text test.</h5>
+        <h6>This is a Long Text test.</h6>
+
+        <br /><br />
+        <p></p><a href="#" id="abc">Touch this, Tap, swipe then trigger Events.</a></p>
+
+        <p>
+          Backbone.js gives structure to web applications by providing models
+          with key-value binding and custom events, collections with a rich API of
+          enumerable functions, views with declarative event handling,
+          and connects it all to your existing API over a RESTful JSON interface.
+        </p>
+        <p>
+          The project is hosted on GitHub, and the annotated source code is available,
+          as well as an online test suite, an example application, a list of tutorials
+          and a long list of real-world projects that use Backbone.
+          Backbone is available for use under the MIT software license.
+        </p>
+
+        <p>The project is hosted on GitHub, and the annotated source code is available,
+          as well as an online test suite, an example application,
+          a list of tutorials and a long list of real-world projects that use Backbone.
+          Backbone is available for use under the MIT software license.</p>
+
+        <p>You can report bugs and discuss features on the GitHub issues page,
+          on Freenode IRC in the #documentcloud channel, post questions to the Google Group,
+          add pages to the wiki or send tweets to @documentcloud.</p>
+
+        <p>Backbone is an open-source component of DocumentCloud.</p>
+
+        <h2>Downloads & Dependencies </h2>
+
       </div>
 
-      <!--custom footer-->
-      <!--<header></header>-->
+      <header><h1>AppUI</h1></header>
       <!--<footer></footer>-->
 
     </div>
+    <div id="about" class="panel">
+      <header><h1>About</h1></header>
+      <p>AppUI is a UI library for mobile (android & iOS)</p>
+      <p>Thanks jq.ui...</p>
+      <p>@第九叔一</p>
+    </div>
   </div>
   <div id="navbar">
-    <a target="#home" class="icon home">Home</a>
+    <a href="#home" class="icon home">Home</a>
+    <a href="#about" class="icon info">About</a>
   </div>
 
 </div>
 <script type="text/javascript" charset="utf-8" src="jq.mobi.js"></script>
 <script type="text/javascript" charset="utf-8" src="js/ui.js"></script>
 <script type="text/javascript">
+window.applicationCache.addEventListener('updateready', function(e) {
+  if (window.applicationCache.status == window.applicationCache.UPDATEREADY) {
+    window.applicationCache.swapCache();
+    if (confirm('A new version of this site is available. Load it?')) {
+      window.location.reload();
+    }
+  }
+}, false);
 ['click', 'swipe', 'swipeLeft', 'swipeRight', 'swipeUp', 'swipeDown', 'doubleTap', 'tap', 'singleTap', 'longTap'].forEach(function(v){
   $("#abc").on(v, function(e){ alert(e.type); })
 });
