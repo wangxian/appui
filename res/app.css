@@ -6,3 +6,5 @@
 a { color: #333333; }
 p+p { padding-top: 10px;  }
 h1 { font-size: 1.8em; }
+
+.panel { padding: 9px; -webkit-box-sizing: border-box; width: 100%; }
