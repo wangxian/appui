@@ -176,10 +176,8 @@ input,textarea { -webkit-user-select:text; }
 
 /* This class is applied to the divs that contain the various "views" or pages of the app. */
 .panel {
-  z-index:180;
-  width:100%;
-  height:100%; padding: 9px;
-  display:none;
+  z-index:180; display:none;
+  width:100%; height:100%;
   position:absolute; top:0px; left:0px;
   overflow-y:auto;
   overflow-x:hidden;
