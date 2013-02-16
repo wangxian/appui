@@ -163,14 +163,11 @@ input,textarea { -webkit-user-select:text; }
 /**********************************************************
   CONTENT AREA
 **********************************************************/
-/* Accounts for positioning of the content area, which is everything below the header and above the navbar. */
 #content{
-  z-index:180; color: #333333;
-  display:block;
+  z-index:180; color: #333333; display:block;
   position:absolute;
-  top:44px;
-  bottom:48px;
-  left:0px;right:0px;
+  top:44px; bottom:48px;
+  left:0px; right:0px;
   overflow:hidden;
 }
 
