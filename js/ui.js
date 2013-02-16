@@ -1737,7 +1737,7 @@
       supressTitle:false,
       show: function() {
         var self = this;
-        var markup = '<div id="' + this.id + '" class="jqPopup hidden">\
+        var markup = '<div id="' + this.id + '" class="jqPopup hidden" style="top:-50%;left:0">\
           <header>' + this.title + '</header>\
           <div><div style="width:1px;height:1px;-webkit-transform:translate3d(0,0,0);float:right"></div>' + this.message + '</div>\
           <footer style="clear:both;">\
@@ -1812,8 +1812,9 @@
         var popup = $('#' + this.id);
         // popup.css("top", ((window.innerHeight / 2.5) + window.pageYOffset) - (popup[0].clientHeight / 2) + "px");
         // popup.css("left", (window.innerWidth / 2) - (popup[0].clientWidth / 2) + "px");
-
+        popup.css("top", '0px');
         popup.css("height", (window.innerHeight / 2) +'px');
+
       }
     };
 
