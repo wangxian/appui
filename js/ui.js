@@ -6,35 +6,77 @@
  * @copyright 2013
  * @author WangXian
  */
+
+/**
+ * Do something when ui startup, eg: set container height
+ */
+(function() {
+
+  // in AppMobi, we need to undo the height stuff since it causes issues.
+  document.addEventListener("appMobi.device.ready", function() {
+    setTimeout(function() {
+      document.getElementById('jQUi').style.height = "100%";
+      document.body.style.height = "100%";
+      document.documentElement.style.minHeight = window.innerHeight;
+    }, 300);
+    this.removeEventListener("appMobi.device.ready", arguments.callee);
+  });
+
+})();
+
+/**
+ * $.fn.css3Animate plugin
+ *
+ * Example:
+   $("#animate").css3Animate({
+    width: "100px",
+    height: "100px",
+    x: "300px",
+    y: "500px",
+    time: "1000ms",
+    callback: function(){  }
+  });
+
+ */
 (function ($) {
   var cache = [];
-  var objId=function(obj){
-    if(!obj.jqmCSS3AnimateId) obj.jqmCSS3AnimateId=$.uuid();
+
+  var objId = function(obj){
+    if(!obj.jqmCSS3AnimateId) obj.jqmCSS3AnimateId = $.uuid();
     return obj.jqmCSS3AnimateId;
-  }
-  var getEl=function(elID){
+  };
+
+  var getEl = function(elID){
     if (typeof elID == "string" || elID instanceof String) {
       return document.getElementById(elID);
-    } else if($.is$(elID)){
+    }
+    else if($.is$(elID)){
       return elID[0];
-    } else {
+    }
+    else {
       return elID;
     }
-  }
-  var getCSS3Animate=function(obj, options){
-    var tmp, id, el = getEl(obj);
-    //first one
+  };
+
+  var getCSS3Animate = function(obj, options){
+    var tmp, id, el;
+
+    el = getEl(obj);
     id = objId(el);
+
     if(cache[id]){
       cache[id].animate(options);
       tmp = cache[id];
-    } else {
+    }
+    else {
       tmp = css3Animate(el, options);
       cache[id] = tmp;
     }
+
     return tmp;
-  }
-  $.fn["css3Animate"] = function (opts) {
+  };
+
+  $.fn.css3Animate = function (opts) {
     //keep old callback system - backwards compatibility - should be deprecated in future versions
     if(!opts.complete && opts.callback) opts.complete = opts.callback;
     //first on
@@ -48,25 +90,23 @@
     return tmp;
   };
 
+  // define css3AnimateQueue constructor
+  $.css3AnimateQueue = function () { return new css3Animate.queue(); }
 
-  $["css3AnimateQueue"] = function () {
-    return new css3Animate.queue();
-  }
+  // if (!window.WebKitCSSMatrix) return;
+  var translateOpen   = $.feat.cssTransformStart;
+  var translateClose  = $.feat.cssTransformEnd;
+  var transitionEnd   = $.feat.cssPrefix.replace(/-/g,"")+"TransitionEnd";
+  transitionEnd       = ($.os.fennec || $.feat.cssPrefix=="" || $.os.ie) ? "transitionend" : transitionEnd;
 
-  //if (!window.WebKitCSSMatrix) return;
-  var translateOpen =$.feat.cssTransformStart;
-  var translateClose = $.feat.cssTransformEnd;
-  var transitionEnd=$.feat.cssPrefix.replace(/-/g,"")+"TransitionEnd";
-  transitionEnd=($.os.fennec||$.feat.cssPrefix==""||$.os.ie)?"transitionend":transitionEnd;
-
-  transitionEnd=transitionEnd.replace(transitionEnd.charAt(0),transitionEnd.charAt(0).toLowerCase());
+  transitionEnd       = transitionEnd.replace(transitionEnd.charAt(0),transitionEnd.charAt(0).toLowerCase());
 
   var css3Animate = (function () {
 
     var css3Animate = function (elID, options) {
       if(!(this instanceof css3Animate)) return new css3Animate(elID, options);
 
-      //start doing stuff
+      // start doing stuff
       this.callbacksStack = [];
       this.activeEvent = null;
       this.countStack = 0;
@@ -85,8 +125,9 @@
         if(cache[id]) delete cache[id];
       });
     };
+
     css3Animate.prototype = {
-      animate:function(options){
+      animate: function(options){
 
         //cancel current active animation on this object
         if(this.isActive) this.cancel();
@@ -107,7 +148,8 @@
             jq(this.el).addClass(options["addClass"]);
           }
 
-        } else {
+        }
+        else {
           //property by property
           var timeNum = numOnly(options["time"]);
           if(timeNum==0) options["time"]=0;
@@ -216,15 +258,18 @@
         }
 
       },
+
       addCallbackHook:function(callback){
         if(callback) this.callbacksStack.push(callback);
         this.countStack++;
         return this.linkFinishedProxy_;
       },
+
       linkFinished:function(canceled){
         if(canceled) this.cancel();
         else this.finishAnimation();
       },
+
       finishAnimation: function (event) {
         if(event) event.preventDefault();
         if(!this.isActive) return;
@@ -325,10 +370,12 @@
 (function($) {
   var HIDE_REFRESH_TIME = 75; // hide animation of pull2ref duration in ms
   var cache = [];
+
   var objId = function(obj) {
     if(!obj.jqmScrollerId) obj.jqmScrollerId = $.uuid();
     return obj.jqmScrollerId;
   }
+
   $.fn["scroller"] = function(opts) {
     var tmp, id;
     for(var i = 0; i < this.length; i++) {
@@ -1647,13 +1694,9 @@
 })(jq);
 
 /**
- * jq.popup - a popup/alert library for html5 mobile apps
- * @copyright Indiepath 2011 - Tim Fisher
- * Modifications/enhancements by appMobi for jqMobi
- *
- */
+ * jq.web.popup
 
-/* EXAMPLE
+ EXAMPLE
  $('body').popup({
    title:"Alert! Alert!",
    message:"This is a test of the emergency alert system!! Don't PANIC!",
@@ -1791,9 +1834,7 @@
         var self = this;
         $('#' + self.id).addClass('hidden');
         $.unblockUI();
-        setTimeout(function() {
-          self.remove();
-        }, 250);
+        setTimeout(function() { self.remove(); }, 250);
       },
 
       remove: function() {
@@ -1824,43 +1865,40 @@
   var uiBlocked = false;
   $.blockUI = function(opacity) {
     if (uiBlocked) return;
+
     opacity = opacity ? " style='opacity:" + opacity + ";'" : "";
     $('BODY').prepend($("<div id='mask'" + opacity + "></div>"));
+
     $('BODY DIV#mask').bind("touchstart", function(e) {
       e.preventDefault();
-    });
-    $('BODY DIV#mask').bind("touchmove", function(e) {
+    }).bind("touchmove", function(e) {
       e.preventDefault();
     });
+
     uiBlocked = true
   };
 
   $.unblockUI = function() {
     uiBlocked = false;
-    $('BODY DIV#mask').unbind("touchstart");
-    $('BODY DIV#mask').unbind("touchmove");
-    $("BODY DIV#mask").remove();
+    $('BODY DIV#mask').unbind("touchstart").unbind("touchmove").remove();
   };
-  /**
-   * Here we override the window.alert function due to iOS eating touch events on native alerts
-   */
+
   window.alert = function(text) {
-    if(text===null||text===undefined)
-      text="null";
-    if($("#jQUi").length>0)
-      $("#jQUi").popup(text.toString());
-    else
-      $(document.body).popup(text.toString());
+    if(text===null || text===undefined) text="null";
+
+    if($("#jQUi").length>0) $("#jQUi").popup(text.toString());
+    else $(document.body).popup(text.toString());
   }
+
+  /*
   window.confirm = function(text) {
     throw "Due to iOS eating touch events from native confirms, please use our popup plugin instead";
   }
+  */
 })(jq);
 
-
 /**
- * jq.web.actionsheet - a actionsheet for html5 mobile apps
- * Copyright 2012 - AppMobi
+ * jq.web.actionsheet
  */
 (function($) {
   $.fn["actionsheet"] = function(opts) {
@@ -1959,9 +1997,9 @@
   })();
 })(jq);
 
-/*
- * jq.web.passwordBox - password box replacement for html5 mobile apps on android due to a bug with CSS3 translate3d
- * @copyright 2011 - AppMobi
+/**
+ * jq.web.passwordBox
+ * password box replacement for html5 mobile apps on android  fixed a bug with CSS3 translate3d
  */
 (function ($) {
   $["passwordBox"] = function () {
@@ -2013,11 +2051,12 @@
     }
   };
 })(jq);
-/*
- * Copyright: AppMobi
- * Description:  This script will replace all drop downs with friendly select controls.  Users can still interact
- * with the old drop down box as normal with javascript, and this will be reflected
 
+/**
+ * jq.web.selectBox
+ *
+ * This script will replace all drop downs with friendly select controls.  Users can still interact
+ * with the old drop down box as normal with javascript, and this will be reflected
  */
 (function($) {
   $['selectBox'] = {
@@ -2350,7 +2389,9 @@
   }
 })(jq);
 
-//Touch events are from zepto/touch.js
+/**
+ * Touch events are from zepto/touch.js
+ */
 (function($) {
   var touch = {}, touchTimeout;
 
@@ -2437,26 +2478,30 @@
   });
 })(jq);
 
-//TouchLayer contributed by Carlos Ouro @ Badoo
-//un-authoritive layer between touches and actions on the DOM
-//(un-authoritive: listeners do not require useCapture)
-//handles overlooking JS and native scrolling, panning,
-//no delay on click, edit mode focus, preventing defaults, resizing content,
-//enter/exit edit mode (keyboard on screen), prevent clicks on momentum, etc
-//It can be used independently in other apps but it is required by jqUi
-//Object Events
-//Enter Edit Mode:
-//pre-enter-edit - when a possible enter-edit is actioned - happens before actual click or focus (android can still reposition elements and event is actioned)
-//cancel-enter-edit - when a pre-enter-edit does not result in a enter-edit
-//enter-edit - on a enter edit mode focus
-//enter-edit-reshape - focus resized/scrolled event
-//in-edit-reshape - resized/scrolled event when a different element is focused
-//Exit Edit Mode
-//exit-edit - on blur
-//exit-edit-reshape - blur resized/scrolled event
-//Other
-//orientationchange-reshape - resize event due to an orientationchange action
-//reshape - window.resize/window.scroll event (ignores onfocus "shaking") - general reshape notice
+/**
+ * TouchLayer contributed by Carlos Ouro @ Badoo
+ *
+ * un-authoritive layer between touches and actions on the DOM
+ * (un-authoritive: listeners do not require useCapture)
+ * handles overlooking JS and native scrolling, panning,
+ * no delay on click, edit mode focus, preventing defaults, resizing content,
+ * enter/exit edit mode (keyboard on screen), prevent clicks on momentum, etc
+ * It can be used independently in other apps but it is required by jqUi
+ * Object Events
+ * Enter Edit Mode:
+ *
+ * pre-enter-edit - when a possible enter-edit is actioned - happens before actual click or focus (android can still reposition elements and event is actioned)
+ * cancel-enter-edit - when a pre-enter-edit does not result in a enter-edit
+ * enter-edit - on a enter edit mode focus
+ * enter-edit-reshape - focus resized/scrolled event
+ * in-edit-reshape - resized/scrolled event when a different element is focused
+ * Exit Edit Mode
+ * exit-edit - on blur
+ * exit-edit-reshape - blur resized/scrolled event
+ * Other
+ * orientationchange-reshape - resize event due to an orientationchange action
+ * reshape - window.resize/window.scroll event (ignores onfocus "shaking") - general reshape notice
+*/
 (function() {
 
   //singleton
@@ -3063,6 +3108,7 @@
   };
 
 })();
+
 /**
  * jq.ui - A User Interface library for creating jqMobi applications
  *
@@ -3070,8 +3116,6 @@
  * @author AppMobi
  */
 (function($) {
-
-
   var hasLaunched = false;
   var startPath = window.location.pathname;
   var defaultHash = window.location.hash;
@@ -3719,6 +3763,7 @@
           nb.append(node);
         }
       }
+
       //Move the scroller to the top and hide it
       this.scrollingDivs['menu_scroller'].hideScrollbars();
       this.scrollingDivs['menu_scroller'].scrollToTop();
@@ -4835,21 +4880,7 @@
 
 })(jq);
 
-
-
-//The following functions are utilitiy functions for jqUi within appMobi.
-//TODO: consider taking all appMobi constraints from jQUI into this code
-(function() {
-  document.addEventListener("appMobi.device.ready", function() { //in AppMobi, we need to undo the height stuff since it causes issues.
-    setTimeout(function() {
-      document.getElementById('jQUi').style.height = "100%";
-      document.body.style.height = "100%";
-      document.documentElement.style.minHeight = window.innerHeight;
-    }, 300);
-    this.removeEventListener("appMobi.device.ready", arguments.callee);
-  });
-
-})();
+// fadeTransition
 (function($ui){
 
   function fadeTransition (oldDiv, currDiv, back) {
@@ -4882,13 +4913,17 @@
           oldDiv.style.zIndex = 1;
         }
       });
-    } else {
+    }
+    else
+    {
       oldDiv.style.zIndex = 1;
       currDiv.style.zIndex = 2;
       currDiv.style.opacity = 0;
+
       that.css3animate(currDiv, {
         x: "0%",
         opacity: .1,
+
         complete: function() {
           that.css3animate(currDiv, {
             x: "0%",
@@ -4911,11 +4946,16 @@
             }
           });
         }
+
       });
     }
+
   }
   $ui.availableTransitions.fade = fadeTransition;
+
 })($.ui);
+
+// flipTransition
 (function($ui){
 
   function flipTransition (oldDiv, currDiv, back) {
@@ -4998,8 +5038,11 @@
       });
     }
   }
+
   $ui.availableTransitions.flip = flipTransition;
 })($.ui);
+
+// popTransition
 (function($ui){
 
   function popTransition(oldDiv, currDiv, back) {
@@ -5070,6 +5113,8 @@
   }
   $ui.availableTransitions.pop = popTransition;
 })($.ui);
+
+// slideTransition
 (function($ui){
 
   /**
@@ -5128,6 +5173,8 @@
   $ui.availableTransitions.slide = slideTransition;
   $ui.availableTransitions['default'] = slideTransition;
 })($.ui);
+
+// slideDownTransition
 (function($ui){
 
   function slideDownTransition (oldDiv, currDiv, back) {
@@ -5195,8 +5242,8 @@
   $ui.availableTransitions.down = slideDownTransition;
 })($.ui);
 
+// slideUpTransition
 (function($ui){
-
   function slideUpTransition(oldDiv, currDiv, back) {
     oldDiv.style.display = "block";
     currDiv.style.display = "block";
