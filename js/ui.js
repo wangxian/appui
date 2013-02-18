@@ -621,7 +621,7 @@
           this.removeEvents();
         }
       },
-      scrollToItem: function(el, where) { //TODO: add functionality for x position
+      scrollToItem: function(el, where) {
         if(!$.is$(el)) el = $(el);
 
         if(where == 'bottom') {
@@ -1730,9 +1730,11 @@
 
       if (typeof containerEl === "string" || containerEl instanceof String) {
         this.container = document.getElementById(containerEl);
-      } else {
+      }
+      else {
         this.container = containerEl;
       }
+
       if (!this.container) {
         alert("Error finding container for popup " + containerEl);
         return;
@@ -1740,21 +1742,23 @@
 
       try {
         if (typeof (opts) === "string" || typeof (opts) === "number")
-          opts = {message: opts,cancelOnly: "true",cancelText: "OK"};
+          opts = { message: opts, cancelOnly: "true", cancelText: "OK" };
 
         this.id = id = opts.id = opts.id || $.uuid(); //opts is passed by reference
         var self = this;
+
+        // overwrite options
         this.title = opts.suppressTitle?"":(opts.title || "提示信息");
         this.message = opts.message || "";
-        this.cancelText = opts.cancelText || "Cancel";
+        this.cancelText = opts.cancelText || "取消";
         this.cancelCallback = opts.cancelCallback || function() { };
         this.cancelClass = opts.cancelClass || "button";
-        this.doneText = opts.doneText || "Done";
+        this.doneText = opts.doneText || "确认";
         this.doneCallback = opts.doneCallback || function(self) { self.hide(); };
         this.doneClass = opts.doneClass || "button";
         this.cancelOnly = opts.cancelOnly || false;
         this.onShow = opts.onShow || function(){};
-        this.autoCloseDone=opts.autoCloseDone!==undefined?opts.autoCloseDone:true;
+        this.autoCloseDone = opts.autoCloseDone !== undefined ? opts.autoCloseDone : true;
 
         queue.push(this);
         if (queue.length == 1) this.show();
@@ -1780,6 +1784,7 @@
       supressTitle:false,
       show: function() {
         var self = this;
+
         var markup = '<div id="' + this.id + '" class="jqPopup hidden" style="top:-50%;left:0">\
           <header>' + this.title + '</header>\
           <div><div style="width:1px;height:1px;-webkit-transform:translate3d(0,0,0);float:right"></div>' + this.message + '</div>\
@@ -1788,28 +1793,31 @@
           <a href="javascript:;" class="'+this.doneClass+'" id="action">' + this.doneText + '</a>\
           </footer>\
         </div></div>';
+
         $(this.container).append($(markup));
 
-        var $el=$("#"+this.id);
+        var $el = $("#"+this.id);
         $el.bind("close", function(){
           self.hide();
         });
 
         if (this.cancelOnly) {
-          $el.find('A#action').hide();
-          $el.find('A#cancel').addClass('center');
+          $el.find('a#action').hide();
+          $el.find('a#cancel').addClass('center');
         }
 
-        $el.find('A').each(function() {
+        $el.find('a').each(function() {
           var button = $(this);
+
           button.bind('click', function(e) {
             if (button.attr('id') == 'cancel') {
               self.cancelCallback.call(self.cancelCallback, self);
               self.hide();
-            } else {
+            }
+            else {
               self.doneCallback.call(self.doneCallback, self);
-              if(self.autoCloseDone)
-                self.hide();
+
+              if(self.autoCloseDone) self.hide();
             }
             e.preventDefault();
           });
@@ -1839,7 +1847,7 @@
 
       remove: function() {
         var self = this;
-        var $el=$("#"+self.id);
+        var $el=$("#"+ self.id);
         $el.unbind("close");
         $el.find('button#action').unbind('click');
         $el.find('button#cancel').unbind('click');
@@ -2510,7 +2518,8 @@
     $.touchLayer = new touchLayer(el);
     return $.touchLayer;
   };
-  //configuration stuff
+
+  // configuration stuff
   var inputElements = ['input', 'select', 'textarea'];
   var autoBlurInputTypes = ['button', 'radio', 'checkbox', 'range','date'];
   var requiresJSFocus = $.os.ios; //devices which require .focus() on dynamic click events
@@ -2703,7 +2712,7 @@
       //the height the page really is at
       if(jq.os.android) {
         return window.innerHeight;
-      } else return numOnly(document.documentElement.style.height); //TODO: works well on iPhone, test BB
+      } else return numOnly(document.documentElement.style.height);
     },
     onOrientationChange: function(e) {
       //this.log("orientationchange");
@@ -2750,7 +2759,7 @@
               var that = this;
               setTimeout(function() {
                 that.fireReshapeEvent('enter-edit');
-              }, 300); //TODO: get accurate reading from window scrolling motion and get rid of timeout
+              }, 300);
             } else this.previewReshapeEvent('enter-edit');
           }
           this.isFocused_ = true;
@@ -2822,7 +2831,7 @@
           var that = this;
           setTimeout(function() {
             that.fireReshapeEvent('exit-edit');
-          }, 300); //TODO: get accurate reading from window scrolling motion and get rid of timeout
+          }, 300);
         } else this.previewReshapeEvent('exit-edit');
       }
     },

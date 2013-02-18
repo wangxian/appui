@@ -22,15 +22,23 @@
   <div id="content">
     <div id="home" class="panel">
       <div id="info">
-        <h1>This is a Long Text test.</h1>
-        <h2>This is a Long Text test.</h2>
-        <h3>This is a Long Text test.</h3>
-        <h4>This is a Long Text test.</h4>
-        <h5>This is a Long Text test.</h5>
-        <h6>This is a Long Text test.</h6>
+        <h1>测试标题字体！ It's the text.</h1>
+        <h2>测试标题字体！ It's the text.</h2>
+        <h3>测试标题字体！ It's the text.</h3>
+        <h4>测试标题字体！ It's the text.</h4>
+        <h5>测试标题字体！ It's the text.</h5>
+        <h6>测试标题字体！ It's the text.</h6>
 
-        <br /><br />
-        <p><a href="#" id="abc">Touch this, Tap, swipe then trigger Events.</a></p>
+        <br />
+
+        <ul id="tests" class="title">
+          <li><a href="#" id="test-touch-events">测试：touch events</a></li>
+          <li><a href="#" id="test-popup">测试：popup dialog</a></li>
+          <li><a href="#" id="test-alert">测试：popup alert</a></li>
+        </ul>
+
+
+        <h3 class="title">以下为长文本测试：</h3>
         <p>
           Backbone.js gives structure to web applications by providing models
           with key-value binding and custom events, collections with a rich API of
@@ -67,7 +75,7 @@
     </div>
   </div>
   <div id="navbar">
-    <a href="#home" class="icon home">Home</a>
+    <a href="#home" class="icon message">Home</a>
     <a href="#about" class="icon info">About</a>
   </div>
 
@@ -83,16 +91,26 @@ window.applicationCache.addEventListener('updateready', function(e) {
     }
   }
 }, false);
-['click', 'swipe', 'swipeLeft', 'swipeRight', 'swipeUp', 'swipeDown', 'doubleTap', 'tap', 'singleTap', 'longTap'].forEach(function(v){
-  $("#abc").on(v, function(e){ alert(e.type); })
+
+$(function(){
+  ['click', 'swipe', 'swipeLeft', 'swipeRight', 'swipeUp', 'swipeDown', 'doubleTap', 'tap', 'singleTap', 'longTap'].forEach(function(v){
+    $("#test-touch-events").on(v, function(e){ alert(e.type); })
+  });
+
+  $("#test-popup").on('tap', function(){
+    $.ui.popup({
+      title: "提示信息",
+      message: "非常抱歉，信息提交失败！",
+      // cancelOnly: true,
+      // suppressTitle: true,
+    });
+  });
+
+  $("#test-alert").on("tap", function(){
+    alert("我是警告信息！<br>window.alert(String message);");
+  });
 });
 
-$.ui.popup({
-  title: "提示信息",
-  message: "非常抱歉，信息提交失败！",
-  cancelOnly: true
-  // suppressTitle: true,
-});
 
 </script>
 </body>

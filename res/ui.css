@@ -310,23 +310,23 @@ input,textarea { -webkit-user-select:text; }
 
 ul { margin:0px; padding:0px; }
 ul > li {
-  display:block;
+  display: block;
   width:100%; height:48px;
-  list-style:none;
-  background:#39424b;
+  list-style: none;
+  background-color: #dddddd;
+  border-bottom: 2px solid #eeeeee;
 }
 
 ul > li > a {
   display:block;
-  width:100%; height:48px; line-height:48px;
+  height:48px; line-height:48px;
   font-family: Helvetica, Arial, sans-serif;
-  font-weight:bold; font-size:18px;
-  text-decoration:none;
-  color:#fff;border-bottom:1px solid black;
-  padding-left:8px; padding-right:-80px;
+  font-weight:bold; font-size: 18px;
+  text-decoration: none;
+  padding-left:8px;
 }
 ul > li > a:after {content:">"; position:absolute; right:15px; }
-ul > li > a[selected], ul > li > a:active { color:#fff !important; }
+ul > li > a[selected], ul > li > a:active { background-color: #bbbbbb; /*color: #E46505 !important;*/ }
 ul > li.group {
   color:#fff;font-size:17px; font-weight:bold;
   text-shadow: 0px 1px 0px rgba(0, 0, 0, 0.4);
@@ -456,10 +456,10 @@ ul > li.group:first-child {top:0; }
 }
 .jqPopup * {color: #000000; }
 .jqPopup.hidden { opacity: 0; -webkit-transform: scale(0); transform:scale(0); top: 50%; left: 50%; margin: 0px auto; }
-.jqPopup header{ font-weight:bold; font-size:20px; margin: 25% 0 5% 0; padding:0; display:block !important; }
-.jqPopup div{font-size:12px; }
-.jqPopup footer{width:100%; text-align:center; display:block !important; position: absolute; bottom: 10%; left: 0px; }
+.jqPopup header{ font-weight:bold; font-size:20px; margin: 24% 0 5% 0; padding:0; display:block !important; }
+.jqPopup div{ font-size:12px; }
+.jqPopup footer{ width:100%; display:block !important; position: absolute; bottom: 10%; left: 0px; }
 .jqPopup a.button { margin:0; padding:0; border-radius:0; background-color: rgba(238,124,50,1); color: #ffffff; font-weight: normal; text-shadow: none;  }
-.jqPopup footer a#cancel{float:left; }
-.jqPopup footer a#action{float:right; margin-right:4px; }
-.jqPopup footer a.center{float:none!important; width:80%; }
+.jqPopup footer a#cancel{ width: 38%; float: left; margin-left: 10%; }
+.jqPopup footer a#action{ width: 38%; float: left; margin-left: 4%; }
+.jqPopup footer a#cancel.center{ float:none!important; width:80%; }

@@ -8,3 +8,5 @@ p+p { padding-top: 10px;  }
 h1 { font-size: 1.8em; }
 
 .panel { padding: 9px; -webkit-box-sizing: border-box; width: 100%; }
+
+.title { margin-bottom: 10px; }
