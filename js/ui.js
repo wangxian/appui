@@ -1742,9 +1742,9 @@
 
       try {
         if (typeof (opts) === "string" || typeof (opts) === "number")
-          opts = { message: opts, cancelOnly: "true", cancelText: "OK" };
+          opts = { message: opts, cancelOnly: "true", cancelText: "取消" };
 
-        this.id = id = opts.id = opts.id || $.uuid(); //opts is passed by reference
+        this.id = id = opts.id = opts.id || $.uuid();
         var self = this;
 
         // overwrite options
@@ -1785,7 +1785,7 @@
       show: function() {
         var self = this;
 
-        var markup = '<div id="' + this.id + '" class="jqPopup hidden" style="top:-50%;left:0">\
+        var markup = '<div id="' + this.id + '" class="jqPopup" style="top:-50%;left:0">\
           <header>' + this.title + '</header>\
           <div><div style="width:1px;height:1px;-webkit-transform:translate3d(0,0,0);float:right"></div>' + this.message + '</div>\
           <footer style="clear:both;">\
@@ -1797,9 +1797,10 @@
         $(this.container).append($(markup));
 
         var $el = $("#"+this.id);
-        $el.bind("close", function(){
-          self.hide();
-        });
+        $el.bind("close", function(){ self.hide(); });
+
+        // why here css3 animate not run? A bug?
+        $el.find('a#cancel').show();
 
         if (this.cancelOnly) {
           $el.find('a#action').hide();
@@ -1823,15 +1824,13 @@
           });
         });
 
-        self.positionPopup();
         $.blockUI(0.8);
+        self.positionPopup();
+
         $el.removeClass('hidden');
+        $el.bind("orientationchange", function() { self.positionPopup(); });
 
-        $el.bind("orientationchange", function() {
-          self.positionPopup();
-        });
-
-        //force header/footer showing to fix CSS style bugs
+        // force header/footer showing to fix CSS style bugs
         $el.find("header").show();
         $el.find("footer").show();
         this.onShow(this);
@@ -1841,6 +1840,7 @@
       hide: function() {
         var self = this;
         $('#' + self.id).addClass('hidden');
+
         $.unblockUI();
         setTimeout(function() { self.remove(); }, 250);
       },
