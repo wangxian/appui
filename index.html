@@ -35,6 +35,7 @@
           <li><a href="#" id="test-touch-events">测试：touch events</a></li>
           <li><a href="#" id="test-popup">测试：popup dialog</a></li>
           <li><a href="#" id="test-alert">测试：popup alert</a></li>
+          <li><a href="#" id="test-no-title">测试：popup no-title</a></li>
         </ul>
 
 
@@ -64,11 +65,17 @@
         <h2>Downloads & Dependencies </h2>
       </div>
 
-      <header><h1>AppUI Example</h1></header>
+      <header>
+        <h1>AppUI Example</h1>
+        <a href="#about" class='button right'>关于</a>
+      </header>
       <!--<footer></footer>-->
     </div>
     <div id="about" class="panel">
-      <header><h1>About</h1></header>
+      <header>
+        <h1>About</h1>
+        <a href="#home" class='button goback'>返回</a>
+      </header>
       <p>AppUI is a UI library for mobile (android & iOS)</p>
       <p>Thanks jq.ui...</p>
       <p>@第九叔一</p>
@@ -97,7 +104,7 @@ $(function(){
     $("#test-touch-events").on(v, function(e){ alert(e.type); })
   });
 
-  $("#test-popup").on('tap', function(){
+  $("#test-popup").on('click', function(){
     $.ui.popup({
       title: "提示信息",
       message: "非常抱歉，信息提交失败！",
@@ -106,7 +113,16 @@ $(function(){
     });
   });
 
-  $("#test-alert").on("tap", function(){
+  $("#test-no-title").on('click', function(){
+    $.ui.popup({
+      title: "提示信息",
+      message: "非常抱歉，信息提交失败！",
+      // cancelOnly: true,
+      suppressTitle: true,
+    });
+  });
+
+  $("#test-alert").on("click", function(){
     alert("我是警告信息！<br>window.alert(String message);");
   });
 });

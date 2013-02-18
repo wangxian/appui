@@ -1796,7 +1796,7 @@
 
         $(this.container).append($(markup));
 
-        var $el = $("#"+this.id);
+        var $el = $("#"+ this.id);
         $el.bind("close", function(){ self.hide(); });
 
         // why here css3 animate not run? A bug?
@@ -1859,11 +1859,12 @@
 
       positionPopup: function() {
         var popup = $('#' + this.id);
+        var height = window.innerHeight / 2;
         // popup.css("top", ((window.innerHeight / 2.5) + window.pageYOffset) - (popup[0].clientHeight / 2) + "px");
         // popup.css("left", (window.innerWidth / 2) - (popup[0].clientWidth / 2) + "px");
         popup.css("top", '0px');
-        popup.css("height", (window.innerHeight / 2) +'px');
-
+        popup.find('header').css("padding", 0.24*height +"px 0 "+ 0.05*height + 'px 0');
+        popup.css("height",  height +'px');
       }
     };
 

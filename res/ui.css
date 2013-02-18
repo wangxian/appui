@@ -86,79 +86,32 @@ input,textarea { -webkit-user-select:text; }
 /**********************************************************
   BUTTON STYLES
 **********************************************************/
-
-/* Sets up positioning of the back button which appears in the header */
-#backButton {
-  display:block;
-  position:absolute;
-  left:0px; top:0px;
-  max-width:50px;
-  text-overflow:ellipsis;
-}
-
-/* sets up sizing and handling of excess text for the type in the back button */
-#backButton > div {
-  max-width:50px;
-  overflow:hidden;
-  text-overflow:ellipsis;
-}
-
-/* Styling for CSS-generated buttons, including the back button. These buttons can bue used anywhere in the UI. */
 .button {
-  z-index:1;
-  color:#333;
-  cursor:pointer;
-  display:inline-block;
-  font-weight:bold;
-  font-size:14px;
-  line-height:36px;
-  position:relative;
-  text-decoration:none;
-  text-align:center;
-  text-shadow:#fff 0 1px 0;
-  height:36px; min-width:40px;
-  padding:0px 8px;
-  margin-top:6px; margin-left:6px;
-  text-overflow:ellipsis;
+  z-index:1; position: relative;
+  color: #333; cursor:pointer; display:inline-block;
+  font-weight:bold; font-size: 14px;
+  height: 32px;line-height: 32px; min-width: 32px;
+  text-decoration: none; text-align:center; text-shadow: #fff 0 1px 0; text-overflow:ellipsis;
+  padding:0px 10px; margin-top:6px; margin-left: 20px;
   -webkit-border-radius:6px; border-radius:6px;
-  background-image:-webkit-gradient(linear, left top, left bottom, from(#fff), to(#999), color-stop(.5,#fff), color-stop(.5,#ccc));
-  background-image:linear-gradient(left top, left bottom, from(#fff), to(#999), color-stop(.5,#fff), color-stop(.5,#ccc));
-  background:#ccc;
+  background:#ffffff;
 }
 
-/* behavior of button for touch interaction */
-.button.pressed {
-  color:#fff;
-  text-shadow:#2e4987 0 1px 0;
-  background-color:#5884d6;
-  border-color:#7488b8;
-  background-image:-webkit-gradient(linear,left top,left bottom, color-stop(0.01, #eee), color-stop(0.05, #709de7), color-stop(0.70, #5884d6), color-stop(1, #4470ca));
+.button.goback {
+  -webkit-border-radius:0 6px 6px 0; border-radius:0 6px 6px 0;
+  padding:0px 10px 0 5px;
 }
 
-.modalbutton {
-  position:absolute;
-  top:0px;right:5px;
-  width:58px;height:32px;
-  line-height:32px;
-  z-index:9999;
+.button.goback::before {
+  display: block; height: 0; width: 0;
+  position: absolute;left: -32px; top: 0px;
+  border: 16px solid; border-color: transparent #ffffff transparent transparent;
+  content: "";
 }
 
-.closebutton  {
-  position:absolute;
-  top:6px; right:6px;
-  display:block;
-  height:24px !important; width:24px !important;
-  border-radius:12px;
-  border:1px solid #666;
-  background:#fff; color:#333;
-  font:bold 21px/18px 'Arial Black', Arial Black, Gadget, Arial, Helvetica, sans-serif;
-  text-align:center;
-  text-decoration:none;
+.button.right {
+  float: right; margin-right: 5px;
 }
-.closebutton:before { content:'x'; }
-.closebutton.selected,.closebutton.modalButton.selected {color:#fff; background:#333; }
-
-
 
 /**********************************************************
   CONTENT AREA
@@ -457,7 +410,7 @@ ul > li.group:first-child {top:0; }
 .jqPopup.hidden { top: -50% !important; -webkit-transition: top 150ms ease-in-out; }
 
 .jqPopup * {color: #000000; }
-.jqPopup header{ font-weight:bold; font-size:20px; margin: 24% 0 5% 0; padding:0; display:block !important; }
+.jqPopup header{ font-weight:bold; font-size:20px; margin: 0; padding: 0; display:block !important; }
 .jqPopup div{ font-size:12px; }
 .jqPopup footer{ width:100%; display:block !important; position: absolute; bottom: 10%; left: 0px; }
 .jqPopup a.button { margin:0; padding:0; border-radius:0; background-color: rgba(238,124,50,1); color: #ffffff; font-weight: normal; text-shadow: none;  }
